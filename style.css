@@ -45,6 +45,8 @@ footer{
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
     height: 5rem;
     padding: 0.7rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -53,6 +55,26 @@ footer{
     left: 0;
     width: 100%;
     z-index: 1;
+}
+
+.barra-mensagem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.area-mensagem {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+}
+
+.enviar-mensagem{
+    background-color: transparent;
+    border-color: transparent;
 }
 
 .menu-contatos{

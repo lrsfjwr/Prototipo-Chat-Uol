@@ -28,22 +28,22 @@ const buscarMensagens = () => {
 const renderizarMensagens = resposta => {
     mensagens = resposta.data;
 
-    const div = document.querySelector("main");
-    div.innerHTML = "";
+    const p = document.querySelector("main");
+    p.innerHTML = "";
 
     for (let i = 0; i < mensagens.length; i++) {
         if (mensagens[i].type === "message") {
-            div.innerHTML += `
-                <div class="${mensagens[i].type}">
-                    ${mensagens[i].from} para ${mensagens[i].to}: ${mensagens[i].text}
-                </div>
+            p.innerHTML += `
+                <p class="${mensagens[i].type}">
+                ${mensagens[i].time} ${mensagens[i].from} para ${mensagens[i].to}: ${mensagens[i].text}
+                <p>
             `
         }
         else {
-            div.innerHTML += `
-                <div class="${mensagens[i].type}">
-                    ${mensagens[i].from} ${mensagens[i].text}
-                </div>
+            p.innerHTML += `
+                <p class="${mensagens[i].type}">
+                ${mensagens[i].time} ${mensagens[i].from} ${mensagens[i].text}
+                <p>
             `
         }
     }
