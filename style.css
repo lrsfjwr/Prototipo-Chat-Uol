@@ -6,19 +6,7 @@ body {
     font-family: "roboto";
 }
 
-img{
-    height: 4rem;
-}
-
-ion-icon{
-    font-size: 3rem;
-}
-
-.icone-enviar{
-    font-size: 2rem;
-}
-
-header{
+header {
     background-color: #FFFFFF;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     height: 5rem;
@@ -33,14 +21,31 @@ header{
     z-index: 1;
 }
 
+img {
+    height: 4rem;
+}
+
+ion-icon {
+    font-size: 3rem;
+}
+
+.acessar-participantes {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.icone-enviar {
+    font-size: 2rem;
+}
+
 main {
     background-color: #F3F3F3;
     position: relative;
     margin-top: 5.25rem;
-    margin-bottom:5.25rem;
+    margin-bottom: 5.25rem;
 }
 
-footer{
+footer {
     background-color: #FFFFFF;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
     height: 5rem;
@@ -57,7 +62,7 @@ footer{
     z-index: 1;
 }
 
-.barra-mensagem{
+.barra-mensagem {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -72,19 +77,19 @@ footer{
     justify-content: space-around;
 }
 
-.enviar-mensagem{
+.enviar-mensagem {
     background-color: transparent;
     border-color: transparent;
 }
 
-.menu-contatos{
+.menu-contatos {
     display: flex;
     position: fixed;
     width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
-    z-index:2;
+    z-index: 2;
 }
 
 .fundo-escuro {
@@ -92,17 +97,17 @@ footer{
     width: 30vw;
     height: 100vh;
     opacity: 0.4;
-    
+
 }
 
 .contatos-chat {
     background-color: #F3F3F3;
     width: 70vw;
     height: 100vh;
-    
-    
+
+
 }
 
-.escondido{
+.escondido {
     display: none;
 }
