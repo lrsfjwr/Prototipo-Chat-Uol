@@ -41,8 +41,8 @@ ion-icon {
 /* Main */
 
 main {
-    margin-top: 6rem;
-    margin-bottom: 6rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
     position: relative;
 }
 
@@ -75,7 +75,7 @@ span {
     font-size: 0.9rem;
 }
 
-.status,.messagem-publica,.messagem-privada{
+.status,.message,.private_message{
     margin-bottom: 0.5rem;
 }
 
@@ -83,11 +83,11 @@ span {
     background-color: #DCDCDC;
 }
 
-.messagem-publica {
+.message {
     background-color: #FFFFFF;
 }
 
-.messagem-privada{
+.private_message{
     background-color: #FFDEDE;
 }
 

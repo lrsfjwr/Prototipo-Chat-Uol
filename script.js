@@ -1,4 +1,5 @@
 let nomeParticipante = prompt("Olá! Digite seu nome para entrar:");
+let mensagens = [];
 
 //Participante entra na sala, e pede-se um nome:
 const adicionarParticipante = () => {
@@ -7,7 +8,7 @@ const adicionarParticipante = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/2859eeff-8821-45c5-ab78-67cda96705d2",
+        "https://mock-api.driven.com.br/api/v6/uol/participants/603cf7f1-5371-456d-9798-b8a9f20ca74e",
         novoParticipante);
     promessa.then(logarNoChat);
     promessa.catch(nomeExistente);
@@ -15,8 +16,9 @@ const adicionarParticipante = () => {
 
 //Em caso de sucesso ao inserir nome
 const logarNoChat = resposta => {
+    buscarMensagens();
     const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
-    const atualizaMensagens = setInterval(buscarMensagens,3000);
+    const atualizaMensagens = setInterval(buscarMensagens, 3000);
 }
 
 //Em caso de nome inválido ou existente
@@ -36,7 +38,7 @@ const enviarStatus = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/status/2859eeff-8821-45c5-ab78-67cda96705d2",
+        "https://mock-api.driven.com.br/api/v6/uol/status/603cf7f1-5371-456d-9798-b8a9f20ca74e",
         participante
     );
     promessa.then(retornoSucesso);
@@ -50,10 +52,43 @@ const retornoErro = erro => console.log(erro);
 //Buscar mensagens do servidor
 const buscarMensagens = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/messages/2859eeff-8821-45c5-ab78-67cda96705d2"
+        "https://mock-api.driven.com.br/api/v6/uol/messages/603cf7f1-5371-456d-9798-b8a9f20ca74e"
     );
-    promessa.then(retornoSucesso);
+    promessa.then(processarMensagens);
     promessa.catch(retornoErro);
+}
+
+//processar receitas
+const processarMensagens = resposta => {
+    let main = document.querySelector("main");
+    main.innerHTML = "";
+    mensagens = resposta.data;
+    mensagens.forEach(renderizarMensagens);
+}
+
+//renderiza mensagens
+const renderizarMensagens = mensagem => {
+    let main = document.querySelector("main");
+    const eStatus = mensagem.type === "status";
+
+    if (eStatus) {
+        main.innerHTML += `
+        <div class="msg status">
+            <p><span class="horario">${mensagem.time} </span><span class="remetente"> ${mensagem.from}</span> ${mensagem.text}</p>
+        </div>`;
+    }
+    else {
+        main.innerHTML += `
+        <div class="msg ${mensagem.type}">
+            <p><span class="horario">${mensagem.time}</span> <span class="remetente">${mensagem.from}</span> <span class="destinatario">${mensagem.to}</span>: ${mensagem.text}</p>
+        </div>`;
+    }
+    rolarAteFinal();
+}
+
+const rolarAteFinal = ( ) => {
+    const ultimoElemento = document.querySelector('main');
+    ultimoElemento.scrollIntoView(false);
 }
 
 //executar funcao ao abrir pagina
