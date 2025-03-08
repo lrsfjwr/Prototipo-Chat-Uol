@@ -1,5 +1,6 @@
 let nomeParticipante = prompt("Olá! Digite seu nome para entrar:");
 let mensagens = [];
+let participantesOnline = [];
 
 //Participante entra na sala, e pede-se um nome:
 const adicionarParticipante = () => {
@@ -17,8 +18,10 @@ const adicionarParticipante = () => {
 //Em caso de sucesso ao inserir nome
 const logarNoChat = resposta => {
     buscarMensagens();
-    const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
+    buscarParticipantes();
     const atualizaMensagens = setInterval(buscarMensagens, 3000);
+    const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
+    const atualizaListaParticipantes = setInterval(buscarParticipantes, 10000);
 }
 
 //Em caso de nome inválido ou existente
@@ -86,9 +89,36 @@ const renderizarMensagens = mensagem => {
     rolarAteFinal();
 }
 
-const rolarAteFinal = ( ) => {
+const rolarAteFinal = () => {
     const ultimoElemento = document.querySelector('main');
     ultimoElemento.scrollIntoView(false);
+}
+
+//buscar participantes
+const buscarParticipantes = () => {
+    const promessa = axios.get(
+        "https://mock-api.driven.com.br/api/v6/uol/participants/603cf7f1-5371-456d-9798-b8a9f20ca74e"
+    );
+    promessa.then(processarParticipantes);
+    promessa.catch(retornoErro);
+
+}
+
+const processarParticipantes = resposta => {
+    let participantes = document.querySelector(".participantes");
+    participantes.innerHTML = "";
+    participantesOnline = resposta.data;
+    participantesOnline.forEach(renderizarParticipantes);
+
+}
+
+const renderizarParticipantes = participante => {
+    let participantes = document.querySelector(".participantes");
+    participantes.innerHTML += `
+                    <div class="contatos">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <p>${participante.name}</p>
+                    </div>`;
 }
 
 //executar funcao ao abrir pagina

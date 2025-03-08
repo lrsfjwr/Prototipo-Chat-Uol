@@ -174,38 +174,46 @@ input::placeholder {
     width: 30vw;
 }
 
-.participantes-chat {
+.menu-navegacao {
     background-color: #F3F3F3;
     height: 100vh;
     width: 70vw;
     padding: 1rem 0.7rem 0 0.7rem;
 }
 
-.participantes-chat p:first-child {
-    font-size: 1rem;
+.titulo{
     font-weight: bold;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.7rem;
 }
 
-.secao-visibilidade{
+.opcao-filtragem{
     margin-top: 1.5rem;
 }
 
-.contatos, .tipo-visibilidade{
+.participantes, .visibilidade{
     display: flex;
     align-items: center;
-    margin: 0.7rem 0 0.7rem 0;
+    justify-content: space-between;
+    margin-bottom: 0.7rem;
 }
 
-.contatos ion-icon{
+.tipo-usuario, .tipo-visibilidade {
+    display:flex;
+    align-items: center;
+}
+
+.tipo-usuario ion-icon, .tipo-visibilidade ion-icon{
     font-size: 1.6rem;
-    margin-right: 0.7rem;
 }
 
-.tipo-visibilidade ion-icon{
-    font-size: 1.4rem;
-    margin-right: 0.7rem;
+.tipo-usuario p, .tipo-visibilidade p {
+    margin-left: 0.5rem;
+}
+
+.selecionado ion-icon {
+    color: #28BB25;
+    font-size: 1.2rem; 
 }
 
 /* Esconder Aba Participantes */
