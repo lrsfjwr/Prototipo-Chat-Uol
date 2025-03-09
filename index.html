@@ -16,7 +16,7 @@
 <body>
     <header>
         <img src="img/logo.png" />
-        <button class="acessar-participantes"><ion-icon name="people"></ion-icon></button>
+        <button class="acessar-participantes" onclick="abrirBarraLateral()"><ion-icon name="people"></ion-icon></button>
     </header>
     <main>
         <!--         <div class="status">
@@ -41,8 +41,7 @@
             </button>
         </div>
     </footer>
-    <div class="menu-participantes "> <!-- aplicar classe escondido -->
-        <div class="fundo-escuro"></div>
+        <div class="fundo-escuro escondido" onclick="fecharBarraLateral()"></div>
         <div class="menu-navegacao">
             <p class="titulo">Escolha um contato para enviar mensagem:</p>
             <div class="participantes">
@@ -83,11 +82,10 @@
                 </div>
             </div>
         </div>
-    </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!--  <script src="script.js"></script> -->
+     <script src="script.js"></script>
 </body>
 
 </html>

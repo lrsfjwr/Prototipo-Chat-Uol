@@ -19,9 +19,9 @@ const adicionarParticipante = () => {
 const logarNoChat = resposta => {
     buscarMensagens();
     buscarParticipantes();
-    const atualizaMensagens = setInterval(buscarMensagens, 3000);
-    const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
-    const atualizaListaParticipantes = setInterval(buscarParticipantes, 10000);
+    /*     const atualizaMensagens = setInterval(buscarMensagens, 3000);
+        const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
+        const atualizaListaParticipantes = setInterval(buscarParticipantes, 10000); */
 }
 
 //Em caso de nome inválido ou existente
@@ -115,10 +115,32 @@ const processarParticipantes = resposta => {
 const renderizarParticipantes = participante => {
     let participantes = document.querySelector(".participantes");
     participantes.innerHTML += `
-                    <div class="contatos">
-                        <ion-icon name="person-circle"></ion-icon>
-                        <p>${participante.name}</p>
-                    </div>`;
+                                <div class="participantes">
+                <div class="tipo-usuario">
+                    <ion-icon name="person-circle"></ion-icon>
+                    <p>${participante.name}</p>
+                </div>
+                <div class="selecionado">
+                </div>
+            </div>`;
+}
+
+//abrir barra lateral
+const abrirBarraLateral = () => {
+    const aparecerFundo = document.querySelector(".fundo-escuro");
+    aparecerFundo.classList.remove("escondido");
+
+    const abrirMenu = document.querySelector(".menu-navegacao");
+    abrirMenu.classList.add("aparecer");
+}
+
+//fechar barra lateral
+const fecharBarraLateral = () => {
+    const fecharMenu = document.querySelector(".menu-navegacao");
+    fecharMenu.classList.remove("aparecer");
+
+    const desaparecerFundo = document.querySelector(".fundo-escuro");
+    desaparecerFundo.classList.add("escondido");
 }
 
 //executar funcao ao abrir pagina

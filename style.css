@@ -157,28 +157,33 @@ input::placeholder {
 
 /* Aba participantes */
 
-.menu-participantes {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
+.fundo-escuro {
+    background-color: black;
+    opacity: 0.4;
+    height: 100%;
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 2;
 }
 
-.fundo-escuro {
-    background-color: black;
-    opacity: 0.4;
-    height: 100vh;
-    width: 30vw;
-}
-
 .menu-navegacao {
     background-color: #F3F3F3;
     height: 100vh;
-    width: 70vw;
+    width: 0;
     padding: 1rem 0.7rem 0 0.7rem;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    transition:all 0.3s;
+}
+
+.aparecer{
+    width: 70vw;
+    opacity: 1.0;
 }
 
 .titulo{
