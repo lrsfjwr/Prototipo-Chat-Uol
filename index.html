@@ -33,10 +33,10 @@
     <footer>
         <div class="barra-mensagem">
             <div class="area-mensagem">
-                <input type="text" placeholder="Escreva aqui..." />
-                <span>Enviando para Todos (público)</span>
+                <input type="text" placeholder="Escreva aqui..." class="campo-mensagem"/>
+                <span>Enviando para <span class="participante-escolhido">Todos</span> (<span class="tipo-visibilidade">público</span>)</span>
             </div>
-            <button class="enviar-mensagem">
+            <button class="enviar-mensagem" onclick="enviarMensagem()">
                 <ion-icon name="paper-plane-outline" class="icone-enviar"></ion-icon>
             </button>
         </div>

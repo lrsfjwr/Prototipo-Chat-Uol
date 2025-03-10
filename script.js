@@ -19,9 +19,9 @@ const adicionarParticipante = () => {
 const logarNoChat = resposta => {
     buscarMensagens();
     buscarParticipantes();
-    /*     const atualizaMensagens = setInterval(buscarMensagens, 3000);
-        const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
-        const atualizaListaParticipantes = setInterval(buscarParticipantes, 10000); */
+    const atualizaMensagens = setInterval(buscarMensagens, 3000);
+    const atualizaStatusParticipante = setInterval(enviarStatus, 5000);
+    const atualizaListaParticipantes = setInterval(buscarParticipantes, 10000);
 }
 
 //Em caso de nome inválido ou existente
@@ -84,7 +84,7 @@ const renderizarMensagens = mensagem => {
     else if(eMsgPublica) {
         main.innerHTML += `
         <div class="msg ${mensagem.type}">
-            <p><span class="horario">${mensagem.time}</span> <span class="remetente">${mensagem.from}</span> <span class="destinatario">${mensagem.to}</span>: ${mensagem.text}</p>
+            <p><span class="horario">${mensagem.time}</span> <span class="remetente">${mensagem.from}</span> para <span class="destinatario">${mensagem.to}</span>: ${mensagem.text}</p>
         </div>`;
     }
     else{
@@ -159,6 +159,57 @@ const fecharBarraLateral = () => {
 
     const desaparecerFundo = document.querySelector(".fundo-escuro");
     desaparecerFundo.classList.add("escondido");
+}
+
+//enviar mensagem no chat
+const enviarMensagem = () => {
+    const to = document.querySelector(".participante-escolhido").innerHTML;
+    const text = document.querySelector(".campo-mensagem").value;
+    let textoValidado = validarTextoVazio(text);
+    let type = document.querySelector(".tipo-visibilidade").innerHTML;
+    const typeValidado = validarTipoMensagem(type);
+
+    const novaMensagem = {
+        from: nomeParticipante,
+        to: to,
+        text: textoValidado,
+        type: typeValidado,
+    }
+
+    const promessa = axios.post(
+        "https://mock-api.driven.com.br/api/v6/uol/messages/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
+        novaMensagem
+    );
+    promessa.then(limparInput);
+    promessa.catch(retornoErro);
+
+    console.log(novaMensagem);
+}
+
+//converte publico ou reservadamente para message ou private_message
+const validarTipoMensagem = type => {
+
+    if(type === "público"){
+        type = "message";
+    }else{
+        type = "private_message";
+    }
+
+    return type;
+}
+
+//validar se texto em Branco
+
+const validarTextoVazio = text => {
+    if(text === ''){
+        alert("Não é possivel enviar texto em branco");
+    }
+    return text;
+}
+
+//limpar input
+const limparInput = () => {
+    const limpar = document.querySelector(".campo-mensagem").value = '';
 }
 
 //executar funcao ao abrir pagina
