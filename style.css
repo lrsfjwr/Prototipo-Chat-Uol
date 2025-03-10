@@ -181,44 +181,41 @@ input::placeholder {
     transition:all 0.3s;
 }
 
-.aparecer{
-    width: 70vw;
-    opacity: 1.0;
-}
-
-.titulo{
-    font-weight: bold;
+.titulo {
     text-align: center;
-    margin-bottom: 0.7rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
 }
 
-.opcao-filtragem{
-    margin-top: 1.5rem;
+.margem-superior{
+    margin-top: 2rem;
 }
 
-.participantes, .visibilidade{
+.nome-participante, .tipo-mensagem{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.8rem;
 }
 
-.tipo-usuario, .tipo-visibilidade {
-    display:flex;
+.icone-participante, .icone-filtro{
+    display: flex;
     align-items: center;
 }
 
-.tipo-usuario ion-icon, .tipo-visibilidade ion-icon{
-    font-size: 1.6rem;
+.texto-lista{
+    font-weight: normal;
+    margin-left: 0.8rem;
 }
 
-.tipo-usuario p, .tipo-visibilidade p {
-    margin-left: 0.5rem;
+.icone-participante ion-icon, .selecionado ion-icon, .icone-filtro ion-icon{
+    font-size: 1.5rem;
 }
 
-.selecionado ion-icon {
-    color: #28BB25;
-    font-size: 1.2rem; 
+/*Aparecer Aba Participantes*/
+.aparecer{
+    width: 70vw;
+    opacity: 1.0;
 }
 
 /* Esconder Aba Participantes */

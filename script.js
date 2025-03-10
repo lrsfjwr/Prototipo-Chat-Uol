@@ -9,7 +9,7 @@ const adicionarParticipante = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/603cf7f1-5371-456d-9798-b8a9f20ca74e",
+        "https://mock-api.driven.com.br/api/v6/uol/participants/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
         novoParticipante);
     promessa.then(logarNoChat);
     promessa.catch(nomeExistente);
@@ -41,7 +41,7 @@ const enviarStatus = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/status/603cf7f1-5371-456d-9798-b8a9f20ca74e",
+        "https://mock-api.driven.com.br/api/v6/uol/status/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
         participante
     );
     promessa.then(retornoSucesso);
@@ -55,7 +55,7 @@ const retornoErro = erro => console.log(erro);
 //Buscar mensagens do servidor
 const buscarMensagens = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/messages/603cf7f1-5371-456d-9798-b8a9f20ca74e"
+        "https://mock-api.driven.com.br/api/v6/uol/messages/8fd2a306-5788-4cb6-ae94-10e957cdfaf5"
     );
     promessa.then(processarMensagens);
     promessa.catch(retornoErro);
@@ -73,6 +73,7 @@ const processarMensagens = resposta => {
 const renderizarMensagens = mensagem => {
     let main = document.querySelector("main");
     const eStatus = mensagem.type === "status";
+    const eMsgPublica = mensagem.type === "message";
 
     if (eStatus) {
         main.innerHTML += `
@@ -80,11 +81,14 @@ const renderizarMensagens = mensagem => {
             <p><span class="horario">${mensagem.time} </span><span class="remetente"> ${mensagem.from}</span> ${mensagem.text}</p>
         </div>`;
     }
-    else {
+    else if(eMsgPublica) {
         main.innerHTML += `
         <div class="msg ${mensagem.type}">
             <p><span class="horario">${mensagem.time}</span> <span class="remetente">${mensagem.from}</span> <span class="destinatario">${mensagem.to}</span>: ${mensagem.text}</p>
         </div>`;
+    }
+    else{
+        console.log("Alguma coisa vai aqui");
     }
     rolarAteFinal();
 }
@@ -97,7 +101,7 @@ const rolarAteFinal = () => {
 //buscar participantes
 const buscarParticipantes = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/603cf7f1-5371-456d-9798-b8a9f20ca74e"
+        "https://mock-api.driven.com.br/api/v6/uol/participants/8fd2a306-5788-4cb6-ae94-10e957cdfaf5"
     );
     promessa.then(processarParticipantes);
     promessa.catch(retornoErro);
@@ -106,7 +110,18 @@ const buscarParticipantes = () => {
 
 const processarParticipantes = resposta => {
     let participantes = document.querySelector(".participantes");
-    participantes.innerHTML = "";
+    participantes.innerHTML = 
+            `<li>
+                <div class="nome-participante">
+                    <div class="icone-participante">
+                        <ion-icon name="people"></ion-icon>
+                        <span class="texto-lista">Todos</span>
+                    </div>
+                    <div class="selecionado">
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
+                </div>
+            </li>`;
     participantesOnline = resposta.data;
     participantesOnline.forEach(renderizarParticipantes);
 
@@ -114,15 +129,18 @@ const processarParticipantes = resposta => {
 
 const renderizarParticipantes = participante => {
     let participantes = document.querySelector(".participantes");
-    participantes.innerHTML += `
-                                <div class="participantes">
-                <div class="tipo-usuario">
-                    <ion-icon name="person-circle"></ion-icon>
-                    <p>${participante.name}</p>
+    participantes.innerHTML += 
+            `<li>
+                <div class="nome-participante">
+                    <div class="icone-participante">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <span class="texto-lista">${participante.name}</span>
+                    </div>
+                    <div class="selecionado">
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
                 </div>
-                <div class="selecionado">
-                </div>
-            </div>`;
+            </li>`;
 }
 
 //abrir barra lateral

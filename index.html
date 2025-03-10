@@ -41,51 +41,63 @@
             </button>
         </div>
     </footer>
-        <div class="fundo-escuro escondido" onclick="fecharBarraLateral()"></div>
-        <div class="menu-navegacao">
-            <p class="titulo">Escolha um contato para enviar mensagem:</p>
-            <div class="participantes">
-                <div class="tipo-usuario">
-                    <ion-icon name="people"></ion-icon>
-                    <p>Todos</p>
+    <div class="fundo-escuro escondido" onclick="fecharBarraLateral()"></div>
+    <div class="menu-navegacao">
+        <div class="titulo">Escolha um contato para enviar mensagem:</div>
+        <ul class="participantes">
+            <li>
+                <div class="nome-participante">
+                    <div class="icone-participante">
+                        <ion-icon name="people"></ion-icon>
+                        <span class="texto-lista">Todos</span>
+                    </div>
+                    <div class="selecionado">
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
                 </div>
-                <div class="selecionado">
-                    <ion-icon name="checkmark-circle"></ion-icon>
+            </li>
+            <li>
+                <div class="nome-participante">
+                    <div class="icone-participante">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <span class="texto-lista">Todos</span>
+                    </div>
+                    <div class="selecionado">
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
                 </div>
-            </div>
-            <div class="participantes">
-                <div class="tipo-usuario">
-                    <ion-icon name="person-circle"></ion-icon>
-                    <p>Fuji</p>
+            </li>
+        </ul>
+        <div class="titulo margem-superior">Escolha a visibilidade:</div>
+        <ul>
+            <li>
+                <div class="tipo-mensagem">
+                    <div class="icone-filtro">
+                        <ion-icon name="lock-open"></ion-icon>
+                        <span class="texto-lista">Público</span>
+                    </div>
+                    <div class="selecionado">
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
                 </div>
-                <div class="selecionado">
-                    <ion-icon name="checkmark-circle"></ion-icon>
+            </li>
+            <li>
+                <div class="tipo-mensagem">
+                    <div class="icone-filtro">
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <span class="texto-lista">Reservadamente</span>
+                    </div>
+                    <div class="selecionado">
+                        <ion-icon name="checkmark-sharp"></ion-icon>
+                    </div>
                 </div>
-            </div>
-            <p class="titulo opcao-filtragem">Escolha a visibilidade:</p>
-            <div class="visibilidade">
-                <div class="tipo-visibilidade">
-                    <ion-icon name="lock-open"></ion-icon>
-                    <p>Público</p>
-                </div>
-                <div class="selecionado">
-                    <ion-icon name="checkmark-circle"></ion-icon>
-                </div>
-            </div>
-            <div class="visibilidade">
-                <div class="tipo-visibilidade">
-                    <ion-icon name="lock-closed"></ion-icon>
-                    <p>Reservadamente</p>
-                </div>
-                <div class="selecionado">
-                    <ion-icon name="checkmark-circle"></ion-icon>
-                </div>
-            </div>
-        </div>
+            </li>
+        </ul>
+    </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-     <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
