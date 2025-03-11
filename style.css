@@ -169,7 +169,7 @@ input::placeholder {
 }
 
 .menu-navegacao {
-    background-color: #F3F3F3;
+    background-color: #FFFFFF;
     height: 100vh;
     width: 0;
     padding: 1rem 0.7rem 0 0.7rem;
@@ -208,9 +208,14 @@ input::placeholder {
     margin-left: 0.8rem;
 }
 
-.icone-participante ion-icon, .selecionado ion-icon, .icone-filtro ion-icon{
+.icone-participante ion-icon, .check ion-icon, .icone-filtro ion-icon{
     font-size: 1.5rem;
 }
+
+.check ion-icon{
+    color: #28BB25;
+}
+
 
 /*Aparecer Aba Participantes*/
 .aparecer{

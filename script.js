@@ -44,13 +44,18 @@ const enviarStatus = () => {
         "https://mock-api.driven.com.br/api/v6/uol/status/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
         participante
     );
-    promessa.then(retornoSucesso);
-    promessa.catch(retornoErro);
+    /* promessa.then(retornoSucesso); */
+    promessa.catch(recarregarPagina);
 
 }
 
 const retornoSucesso = resposta => console.log(resposta);
-const retornoErro = erro => console.log(erro);
+
+//caso o catch de erro, recarrega a página
+const recarregarPagina = erro => {
+    alert("Algo deu errado, a página será recarregada");
+    window.location.reload();
+}
 
 //Buscar mensagens do servidor
 const buscarMensagens = () => {
@@ -58,7 +63,7 @@ const buscarMensagens = () => {
         "https://mock-api.driven.com.br/api/v6/uol/messages/8fd2a306-5788-4cb6-ae94-10e957cdfaf5"
     );
     promessa.then(processarMensagens);
-    promessa.catch(retornoErro);
+    promessa.catch(recarregarPagina);
 }
 
 //processar receitas
@@ -88,7 +93,7 @@ const renderizarMensagens = mensagem => {
         </div>`;
     }
     else{
-        console.log("Alguma coisa vai aqui");
+        console.log(mensagem);
     }
     rolarAteFinal();
 }
@@ -104,7 +109,7 @@ const buscarParticipantes = () => {
         "https://mock-api.driven.com.br/api/v6/uol/participants/8fd2a306-5788-4cb6-ae94-10e957cdfaf5"
     );
     promessa.then(processarParticipantes);
-    promessa.catch(retornoErro);
+    promessa.catch(recarregarPagina);
 
 }
 
@@ -117,7 +122,7 @@ const processarParticipantes = resposta => {
                         <ion-icon name="people"></ion-icon>
                         <span class="texto-lista">Todos</span>
                     </div>
-                    <div class="selecionado">
+                    <div class="check">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
@@ -128,6 +133,8 @@ const processarParticipantes = resposta => {
 }
 
 const renderizarParticipantes = participante => {
+    console.log(participante);
+
     let participantes = document.querySelector(".participantes");
     participantes.innerHTML += 
             `<li>
@@ -136,7 +143,7 @@ const renderizarParticipantes = participante => {
                         <ion-icon name="person-circle"></ion-icon>
                         <span class="texto-lista">${participante.name}</span>
                     </div>
-                    <div class="selecionado">
+                    <div class="check escondido">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
@@ -167,7 +174,7 @@ const enviarMensagem = () => {
     const text = document.querySelector(".campo-mensagem").value;
     let textoValidado = validarTextoVazio(text);
     let type = document.querySelector(".tipo-visibilidade").innerHTML;
-    const typeValidado = validarTipoMensagem(type);
+    let typeValidado = validarTipoMensagem(type);
 
     const novaMensagem = {
         from: nomeParticipante,
@@ -176,30 +183,31 @@ const enviarMensagem = () => {
         type: typeValidado,
     }
 
+    console.log(novaMensagem);
+
     const promessa = axios.post(
         "https://mock-api.driven.com.br/api/v6/uol/messages/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
         novaMensagem
     );
     promessa.then(limparInput);
-    promessa.catch(retornoErro);
-
-    console.log(novaMensagem);
+    promessa.catch(recarregarPagina);
 }
+
+/* const retornoErro = erro => console.log(erro); */
 
 //converte publico ou reservadamente para message ou private_message
 const validarTipoMensagem = type => {
 
-    if(type === "público"){
+    if(type === "Público"){
         type = "message";
     }else{
         type = "private_message";
     }
 
-    return type;
+    return type
 }
 
 //validar se texto em Branco
-
 const validarTextoVazio = text => {
     if(text === ''){
         alert("Não é possivel enviar texto em branco");
@@ -210,6 +218,28 @@ const validarTextoVazio = text => {
 //limpar input
 const limparInput = () => {
     const limpar = document.querySelector(".campo-mensagem").value = '';
+}
+
+
+//funcao selecionar participante
+
+
+//funcao selecionar msg publica ou privada
+
+const selecionarPrivacidade = elemento => {
+    const li = document.querySelectorAll(".privacidade .check");
+
+    const selecionado = elemento.querySelector(".texto-lista").innerHTML;
+    
+    if (selecionado === "Público") {
+        li[0].classList.remove("escondido");
+        li[1].classList.add("escondido");
+    } else {
+        li[0].classList.add("escondido");
+        li[1].classList.remove("escondido");
+    }
+    let alterarTexto = document.querySelector(".tipo-visibilidade");
+    alterarTexto.innerHTML = selecionado;
 }
 
 //executar funcao ao abrir pagina

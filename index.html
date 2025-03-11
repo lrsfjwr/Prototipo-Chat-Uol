@@ -34,7 +34,7 @@
         <div class="barra-mensagem">
             <div class="area-mensagem">
                 <input type="text" placeholder="Escreva aqui..." class="campo-mensagem"/>
-                <span>Enviando para <span class="participante-escolhido">Todos</span> (<span class="tipo-visibilidade">público</span>)</span>
+                <span>Enviando para <span class="participante-escolhido">Todos</span> (<span class="tipo-visibilidade">Público</span>)</span>
             </div>
             <button class="enviar-mensagem" onclick="enviarMensagem()">
                 <ion-icon name="paper-plane-outline" class="icone-enviar"></ion-icon>
@@ -45,13 +45,13 @@
     <div class="menu-navegacao">
         <div class="titulo">Escolha um contato para enviar mensagem:</div>
         <ul class="participantes">
-            <li>
+            <li onclick="selecionarParticipante(this)">
                 <div class="nome-participante">
                     <div class="icone-participante">
                         <ion-icon name="people"></ion-icon>
                         <span class="texto-lista">Todos</span>
                     </div>
-                    <div class="selecionado">
+                    <div class="check">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
@@ -62,32 +62,32 @@
                         <ion-icon name="person-circle"></ion-icon>
                         <span class="texto-lista">Todos</span>
                     </div>
-                    <div class="selecionado">
+                    <div class="check">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
             </li>
         </ul>
         <div class="titulo margem-superior">Escolha a visibilidade:</div>
-        <ul>
-            <li>
+        <ul class="privacidade">
+            <li onclick="selecionarPrivacidade(this)">
                 <div class="tipo-mensagem">
                     <div class="icone-filtro">
                         <ion-icon name="lock-open"></ion-icon>
                         <span class="texto-lista">Público</span>
                     </div>
-                    <div class="selecionado">
+                    <div class="check selecionado">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
             </li>
-            <li>
+            <li onclick="selecionarPrivacidade(this)">
                 <div class="tipo-mensagem">
                     <div class="icone-filtro">
                         <ion-icon name="lock-closed"></ion-icon>
                         <span class="texto-lista">Reservadamente</span>
                     </div>
-                    <div class="selecionado">
+                    <div class="check escondido">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
