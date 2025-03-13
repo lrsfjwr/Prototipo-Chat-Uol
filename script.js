@@ -1,15 +1,17 @@
 let nomeParticipante = prompt("Olá! Digite seu nome para entrar:");
 let mensagens = [];
 let participantesOnline = [];
+let participanteSelecionado = "Todos";
 
 //Participante entra na sala, e pede-se um nome:
 const adicionarParticipante = () => {
+    
     const novoParticipante = {
         name: nomeParticipante
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
+        "https://mock-api.driven.com.br/api/v6/uol/participants/a171062c-ecc3-40cc-a5e9-0fa759f77873",
         novoParticipante);
     promessa.then(logarNoChat);
     promessa.catch(nomeExistente);
@@ -28,7 +30,7 @@ const logarNoChat = resposta => {
 const nomeExistente = erro => {
 
     if (erro.response.status === 400) {
-        nomeParticipante = prompt("Este nome já está em uso. Digite outro nome:");
+        nomeParticipante = prompt("Nome em branco ou em uso. Digite novamente:");
     }
     adicionarParticipante();
 }
@@ -41,7 +43,7 @@ const enviarStatus = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/status/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
+        "https://mock-api.driven.com.br/api/v6/uol/status/a171062c-ecc3-40cc-a5e9-0fa759f77873",
         participante
     );
     /* promessa.then(retornoSucesso); */
@@ -60,7 +62,7 @@ const recarregarPagina = erro => {
 //Buscar mensagens do servidor
 const buscarMensagens = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/messages/8fd2a306-5788-4cb6-ae94-10e957cdfaf5"
+        "https://mock-api.driven.com.br/api/v6/uol/messages/a171062c-ecc3-40cc-a5e9-0fa759f77873"
     );
     promessa.then(processarMensagens);
     promessa.catch(recarregarPagina);
@@ -106,7 +108,7 @@ const rolarAteFinal = () => {
 //buscar participantes
 const buscarParticipantes = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/8fd2a306-5788-4cb6-ae94-10e957cdfaf5"
+        "https://mock-api.driven.com.br/api/v6/uol/participants/a171062c-ecc3-40cc-a5e9-0fa759f77873"
     );
     promessa.then(processarParticipantes);
     promessa.catch(recarregarPagina);
@@ -116,13 +118,13 @@ const buscarParticipantes = () => {
 const processarParticipantes = resposta => {
     let participantes = document.querySelector(".participantes");
     participantes.innerHTML = 
-            `<li>
+            `<li onclick="selecionarParticipante(this)">
                 <div class="nome-participante">
                     <div class="icone-participante">
                         <ion-icon name="people"></ion-icon>
                         <span class="texto-lista">Todos</span>
                     </div>
-                    <div class="check">
+                    <div class="check escondido">
                         <ion-icon name="checkmark-sharp"></ion-icon>
                     </div>
                 </div>
@@ -133,11 +135,9 @@ const processarParticipantes = resposta => {
 }
 
 const renderizarParticipantes = participante => {
-    console.log(participante);
-
     let participantes = document.querySelector(".participantes");
     participantes.innerHTML += 
-            `<li>
+            `<li onclick="selecionarParticipante(this)">
                 <div class="nome-participante">
                     <div class="icone-participante">
                         <ion-icon name="person-circle"></ion-icon>
@@ -148,6 +148,22 @@ const renderizarParticipantes = participante => {
                     </div>
                 </div>
             </li>`;
+    verificaParticipanteSelecionado();
+}
+
+const verificaParticipanteSelecionado = () => {
+    const listaParticipantes = document.querySelectorAll(".participantes li");
+    listaParticipantes.forEach(analisaSelecionado);
+
+}
+const analisaSelecionado = index => { 
+    const participante = index.querySelector(".texto-lista").innerHTML;
+    const selecionado = index.querySelector(".participantes .check");
+    if (participante === participanteSelecionado) {
+        selecionado.classList.remove("escondido");
+    }else{
+        selecionado.classList.add("escondido");
+    }
 }
 
 //abrir barra lateral
@@ -186,7 +202,7 @@ const enviarMensagem = () => {
     console.log(novaMensagem);
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/messages/8fd2a306-5788-4cb6-ae94-10e957cdfaf5",
+        "https://mock-api.driven.com.br/api/v6/uol/messages/a171062c-ecc3-40cc-a5e9-0fa759f77873",
         novaMensagem
     );
     promessa.then(limparInput);
@@ -223,6 +239,26 @@ const limparInput = () => {
 
 //funcao selecionar participante
 
+const selecionarParticipante = elemento => {
+    const nomeSelecionado = elemento.querySelector(".texto-lista").innerHTML;
+    participanteSelecionado = nomeSelecionado;
+    
+    
+    if (participanteSelecionado === "Todos") {
+        const liPrivacidade = document.querySelectorAll(".privacidade .check");
+        let publico = document.querySelectorAll(".privacidade .texto-lista");
+        liPrivacidade[0].classList.remove("escondido");
+        liPrivacidade[1].classList.add("escondido");
+        
+        let texto = publico[0].innerHTML;
+        let alterarTexto = document.querySelector(".tipo-visibilidade");
+        alterarTexto.innerHTML = texto;
+    }
+    verificaParticipanteSelecionado();
+    let alterarPessoa = document.querySelector(".participante-escolhido");
+    alterarPessoa.innerHTML = participanteSelecionado;
+    
+}
 
 //funcao selecionar msg publica ou privada
 
@@ -234,11 +270,16 @@ const selecionarPrivacidade = elemento => {
     if (selecionado === "Público") {
         li[0].classList.remove("escondido");
         li[1].classList.add("escondido");
-    } else {
+    } else if (selecionado === "Reservadamente" && participanteSelecionado === "Todos") {
+        alert("Não é possivel enviar uma mensagem reservada para Todos");
+        let alterarTexto = document.querySelector(".tipo-visibilidade");
+        alterarTexto.innerHTML = "Público";
+    }
+    else{
         li[0].classList.add("escondido");
         li[1].classList.remove("escondido");
     }
-    let alterarTexto = document.querySelector(".tipo-visibilidade");
+    alterarTexto = document.querySelector(".tipo-visibilidade");
     alterarTexto.innerHTML = selecionado;
 }
 
