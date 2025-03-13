@@ -11,7 +11,7 @@ const adicionarParticipante = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/a171062c-ecc3-40cc-a5e9-0fa759f77873",
+        "https://mock-api.driven.com.br/api/v6/uol/participants/a4a3f92a-4af4-4fb7-a82c-8a9e61dba1c4",
         novoParticipante);
     promessa.then(logarNoChat);
     promessa.catch(nomeExistente);
@@ -43,15 +43,13 @@ const enviarStatus = () => {
     }
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/status/a171062c-ecc3-40cc-a5e9-0fa759f77873",
+        "https://mock-api.driven.com.br/api/v6/uol/status/a4a3f92a-4af4-4fb7-a82c-8a9e61dba1c4",
         participante
     );
     /* promessa.then(retornoSucesso); */
     promessa.catch(recarregarPagina);
 
 }
-
-const retornoSucesso = resposta => console.log(resposta);
 
 //caso o catch de erro, recarrega a página
 const recarregarPagina = erro => {
@@ -62,7 +60,7 @@ const recarregarPagina = erro => {
 //Buscar mensagens do servidor
 const buscarMensagens = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/messages/a171062c-ecc3-40cc-a5e9-0fa759f77873"
+        "https://mock-api.driven.com.br/api/v6/uol/messages/a4a3f92a-4af4-4fb7-a82c-8a9e61dba1c4"
     );
     promessa.then(processarMensagens);
     promessa.catch(recarregarPagina);
@@ -95,7 +93,13 @@ const renderizarMensagens = mensagem => {
         </div>`;
     }
     else{
-        console.log(mensagem);
+        if(mensagem.from === nomeParticipante || mensagem.to === nomeParticipante){
+            main.innerHTML += `
+            <div class="msg ${mensagem.type}">
+            <p><span class="horario">${mensagem.time}</span> <span class="remetente">${mensagem.from}</span> reservadamente para <span
+                    class="destinatario">${mensagem.to}</span>: ${mensagem.text}</p>
+            </div>`;
+        }
     }
     rolarAteFinal();
 }
@@ -108,7 +112,7 @@ const rolarAteFinal = () => {
 //buscar participantes
 const buscarParticipantes = () => {
     const promessa = axios.get(
-        "https://mock-api.driven.com.br/api/v6/uol/participants/a171062c-ecc3-40cc-a5e9-0fa759f77873"
+        "https://mock-api.driven.com.br/api/v6/uol/participants/a4a3f92a-4af4-4fb7-a82c-8a9e61dba1c4"
     );
     promessa.then(processarParticipantes);
     promessa.catch(recarregarPagina);
@@ -151,6 +155,7 @@ const renderizarParticipantes = participante => {
     verificaParticipanteSelecionado();
 }
 
+//manter o check no participante
 const verificaParticipanteSelecionado = () => {
     const listaParticipantes = document.querySelectorAll(".participantes li");
     listaParticipantes.forEach(analisaSelecionado);
@@ -186,30 +191,44 @@ const fecharBarraLateral = () => {
 
 //enviar mensagem no chat
 const enviarMensagem = () => {
-    const to = document.querySelector(".participante-escolhido").innerHTML;
+    let destinatario = participantesOnline.find(verificaPresenca);  
+    let toValidado = validarDestinatario(destinatario);
     const text = document.querySelector(".campo-mensagem").value;
     let textoValidado = validarTextoVazio(text);
     let type = document.querySelector(".tipo-visibilidade").innerHTML;
     let typeValidado = validarTipoMensagem(type);
 
-    const novaMensagem = {
-        from: nomeParticipante,
-        to: to,
-        text: textoValidado,
-        type: typeValidado,
-    }
+        const novaMensagem = {
+            from: nomeParticipante,
+            to: toValidado,
+            text: textoValidado,
+            type: typeValidado,
+        }
 
-    console.log(novaMensagem);
 
     const promessa = axios.post(
-        "https://mock-api.driven.com.br/api/v6/uol/messages/a171062c-ecc3-40cc-a5e9-0fa759f77873",
+        "https://mock-api.driven.com.br/api/v6/uol/messages/a4a3f92a-4af4-4fb7-a82c-8a9e61dba1c4",
         novaMensagem
     );
     promessa.then(limparInput);
     promessa.catch(recarregarPagina);
 }
 
-/* const retornoErro = erro => console.log(erro); */
+
+//valida destinatário
+const validarDestinatario = destinatario => {
+    const to = document.querySelector(".participante-escolhido").innerHTML;
+    if (destinatario || (!destinatario && to === "Todos")) {
+    return to;    
+    }else{
+    return undefined;
+    }
+}
+
+const verificaPresenca = to => {
+    const destinatario = document.querySelector(".participante-escolhido").innerHTML;
+    return destinatario === to.name;
+}
 
 //converte publico ou reservadamente para message ou private_message
 const validarTipoMensagem = type => {
@@ -272,15 +291,15 @@ const selecionarPrivacidade = elemento => {
         li[1].classList.add("escondido");
     } else if (selecionado === "Reservadamente" && participanteSelecionado === "Todos") {
         alert("Não é possivel enviar uma mensagem reservada para Todos");
-        let alterarTexto = document.querySelector(".tipo-visibilidade");
-        alterarTexto.innerHTML = "Público";
+        let manterTexto = document.querySelector(".tipo-visibilidade");
+        manterTexto.innerHTML = "Público";
     }
     else{
         li[0].classList.add("escondido");
         li[1].classList.remove("escondido");
+        let alterarTexto = document.querySelector(".tipo-visibilidade");
+        alterarTexto.innerHTML = selecionado;
     }
-    alterarTexto = document.querySelector(".tipo-visibilidade");
-    alterarTexto.innerHTML = selecionado;
 }
 
 //executar funcao ao abrir pagina
